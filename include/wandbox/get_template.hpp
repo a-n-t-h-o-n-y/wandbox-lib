@@ -4,6 +4,7 @@
 
 namespace wandbox {
 
+/// Get the template code associated with \p name.
 std::string get_template(const std::string& name);
 
 }  // namespace wandbox

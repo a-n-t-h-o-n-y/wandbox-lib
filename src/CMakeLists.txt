@@ -6,6 +6,7 @@ add_library(wandbox STATIC
     detail/get_connection.cpp
     detail/to_string.cpp
     detail/to_result.cpp
+    detail/to_session.cpp
     detail/to_compiler.cpp
 )
 

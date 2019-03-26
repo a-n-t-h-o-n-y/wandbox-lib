@@ -5,6 +5,7 @@
 namespace wandbox {
 namespace detail {
 
+/// The hostname("wandbox.org")
 extern const std::string host_k;
 
 /// Assume the application will only every use a single connection.

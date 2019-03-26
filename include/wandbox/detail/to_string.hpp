@@ -3,20 +3,24 @@
 #include <string>
 
 namespace wandbox {
+struct Session;
 struct Compiler;
-struct Compiler_info;
 struct Result;
 struct Switch;
 
 namespace detail {
 
-std::string to_string(const Compiler& context, const std::string& code);
+/// Return a string representation of the \p context and \p code.
+std::string to_string(const Session& context, const std::string& code);
 
+/// Return a string representation of the \p result.
 std::string to_string(const Result& result);
 
-std::string to_string(const Switch& s);
+/// Return a string representation of the \p option.
+std::string to_string(const Switch& option);
 
-std::string to_string(const Compiler_info& info);
+/// Return a string representation of the \p info.
+std::string to_string(const Compiler& info);
 
 }  // namespace detail
 }  // namespace wandbox

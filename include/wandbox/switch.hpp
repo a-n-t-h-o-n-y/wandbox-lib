@@ -4,6 +4,7 @@
 
 namespace wandbox {
 
+/// Compiler switch provided by Wandbox.
 struct Switch {
     bool is_default;
     std::string name;

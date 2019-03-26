@@ -9,8 +9,9 @@ namespace wandbox {
 struct Result;
 namespace detail {
 
-Result to_result(const boost::property_tree::ptree& response);
+/// Parses a boost::ptree for data about a compilation result.
+Result to_result(const boost::property_tree::ptree& tree);
 
-}
+}  // namespace detail
 }  // namespace wandbox
 #endif  // WANDBOX_DETAIL_TO_RESULT_HPP

@@ -3,8 +3,8 @@
 #include <string>
 
 #include <wandbox/compiler.hpp>
-#include <wandbox/compiler_info.hpp>
 #include <wandbox/result.hpp>
+#include <wandbox/session.hpp>
 #include <wandbox/switch.hpp>
 
 namespace {
@@ -21,7 +21,7 @@ std::string join(const std::string& key, const std::string& value) {
 namespace wandbox {
 namespace detail {
 
-std::string to_string(const Compiler& context, const std::string& code) {
+std::string to_string(const Session& context, const std::string& code) {
     std::string result{"{\n"};
     result += join("code", code);
     result += join("compiler", context.name);
@@ -49,16 +49,17 @@ std::string to_string(const Result& result) {
     return output;
 }
 
-std::string to_string(const Switch& s) {
+std::string to_string(const Switch& option) {
     std::string output;
-    output += "default: " + std::string(s.is_default ? "true" : "false") + '\n';
-    output += "name: " + s.name + '\n';
-    output += "display_name: " + s.display_name + '\n';
-    output += "display_flats: " + s.display_flags + '\n';
+    output +=
+        "default: " + std::string(option.is_default ? "true" : "false") + '\n';
+    output += "name: " + option.name + '\n';
+    output += "display_name: " + option.display_name + '\n';
+    output += "display_flats: " + option.display_flags + '\n';
     return output;
 }
 
-std::string to_string(const Compiler_info& info) {
+std::string to_string(const Compiler& info) {
     std::string output;
     output += "name: " + info.name + '\n';
     output += "display_name: " + info.display_name + '\n';

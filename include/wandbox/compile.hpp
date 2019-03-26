@@ -5,9 +5,10 @@
 #include <wandbox/result.hpp>
 
 namespace wandbox {
-struct Compiler;
+struct Session;
 
-Result compile(const Compiler& context, const std::string& code);
+/// Send \p code off to be compiled by Wandbox, with \p context settings.
+Result compile(const Session& context, const std::string& code);
 
 }  // namespace wandbox
 #endif  // WANDBOX_COMPILE_HPP

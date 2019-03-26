@@ -2,14 +2,15 @@
 #define WANDBOX_GET_PERMLINK_HPP
 #include <string>
 
-#include <wandbox/compiler.hpp>
 #include <wandbox/result.hpp>
+#include <wandbox/session.hpp>
 
 namespace wandbox {
 
+/// Data returned by requesting a permlink to a specific compilation.
 struct Permlink_result {
     Result result;
-    Compiler compiler;
+    Session context;
     std::string code;
 };
 

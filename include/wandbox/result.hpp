@@ -4,6 +4,7 @@
 
 namespace wandbox {
 
+/// Data returned as the result of a compilation by Wandbox.
 struct Result {
     /// Exit code
     int status;

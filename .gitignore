@@ -2,3 +2,4 @@ build/
 notes/
 tags
 *.json
+docs/html

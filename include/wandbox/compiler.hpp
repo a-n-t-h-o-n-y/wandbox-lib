@@ -1,28 +1,24 @@
 #ifndef WANDBOX_COMPILER_HPP
 #define WANDBOX_COMPILER_HPP
 #include <string>
+#include <vector>
+
+#include <wandbox/switch.hpp>
 
 namespace wandbox {
 
-/// Data about the compiler and options passed to it for compilation.
+/// Informantion about a given compiler that Wandbox offers.
 struct Compiler {
-    /// Compiler Name - Required
     std::string name;
-
-    /// Standard Input
-    std::string stdin;
-
-    /// Used options for a compiler joined by comma.
-    std::string options;
-
-    /// Compile-time any additional options joined by line-breaks.
-    std::string raw_compiler_options;
-
-    /// Run-time any additional options joined by line-breaks.
-    std::string raw_runtime_options;
-
-    /// Generate permanent link if true.
-    bool save{false};
+    std::string display_name;
+    std::string version;
+    std::string language;
+    std::string display_compile_command;
+    bool compiler_option_raw;
+    bool runtime_option_raw;
+    std::vector<Switch> switches;
+    std::vector<std::string> templates;
+    int provider;
 };
 
 }  // namespace wandbox
