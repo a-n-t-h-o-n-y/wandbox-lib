@@ -1,0 +1,4 @@
+build/
+notes/
+tags
+*.json
