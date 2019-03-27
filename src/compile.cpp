@@ -15,13 +15,35 @@
 #include <wandbox/result.hpp>
 #include <wandbox/session.hpp>
 
+namespace {
+
+/// Clean source code so that it can be sent along a socket.
+std::string sanitize(const std::string& input) {
+    std::string result;
+    for (char c : input) {
+        std::string to_put(1, c);
+        if (c == '\n') {
+            to_put = "\\n";
+        } else if (c == '\t') {
+            to_put = "\\t";
+        } else if (c == '\"') {
+            to_put = "\\\"";
+        } else if (c == '\\') {
+            to_put = "\\\\";
+        }
+        result.append(to_put);
+    }
+    return result;
+}
+}  // namespace
+
 namespace wandbox {
 
 Result compile(const Session& context, const std::string& code) {
     auto request = http::generate::basic_POST_request(
         detail::host_k, "/api/compile.json", false);
     request.headers["Content-type"] = "application/json";
-    request.message_body = detail::to_string(context, code);
+    request.message_body = detail::to_string(context, sanitize(code));
 
     http::send(request, detail::get_connection());
     auto response = http::read(detail::get_connection());

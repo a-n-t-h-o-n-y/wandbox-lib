@@ -14,7 +14,8 @@ int main() {
     context.options = "-O3, -std=c++17";
     context.save = true;
     const std::string code =
-        R"(#include <iostream>\nint main(){std::cout << \"Hello, World!\\n\";\nreturn 1;\n})";
+        "#include <iostream>\nint main(){std::cout << \"Hello, "
+        "World!\\n\";\nreturn 1;\n}";
     auto result = wandbox::compile(context, code);
     std::cout << wandbox::detail::to_string(result) << '\n';
 

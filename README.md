@@ -18,7 +18,8 @@ int main() {
     
     // Compile Code
     const std::string code =
-       R"(#include <iostream>\nint main(){std::cout << \"Hello, World!\\n\";})";
+        "#include <iostream>\nint main(){std::cout << \"Hello, "
+        "World!\\n\";\nreturn 1;\n}";
     auto result = wandbox::compile(context, code);
     assert(result.program_stdout == "Hello, World!");
     
