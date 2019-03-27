@@ -4,12 +4,9 @@
 
 #include <http/generate/basic_post_request.hpp>
 #include <http/http_request.hpp>
-#include <http/http_response.hpp>
-#include <http/parse/json_ptree.hpp>
-#include <http/read.hpp>
-#include <http/send.hpp>
 
 #include <wandbox/detail/get_connection.hpp>
+#include <wandbox/detail/send.hpp>
 #include <wandbox/detail/to_result.hpp>
 #include <wandbox/detail/to_string.hpp>
 #include <wandbox/result.hpp>
@@ -65,20 +62,26 @@ std::string shield_escaped(const std::string& input) {
     }
     return result;
 }
+
+/// Create a HTTP_request to compile \p code.
+http::HTTP_request generate_compile_request(const wandbox::Session& context,
+                                            const std::string& code) {
+    using namespace wandbox;
+    auto request = http::generate::basic_POST_request(
+        detail::host_k, "/api/compile.json", false);
+    request.headers["Content-type"] = "application/json";
+    request.message_body = detail::to_string(context, shield_escaped(code));
+    return request;
+}
+
 }  // namespace
 
 namespace wandbox {
 
 Result compile(const Session& context, const std::string& code) {
-    auto request = http::generate::basic_POST_request(
-        detail::host_k, "/api/compile.json", false);
-    request.headers["Content-type"] = "application/json";
-    request.message_body = detail::to_string(context, shield_escaped(code));
-
-    http::send(request, detail::get_connection());
-    auto response = http::read(detail::get_connection());
-    auto ptree = http::parse::json_ptree(response.message_body);
-    return detail::to_result(ptree);
+    const auto request = generate_compile_request(context, code);
+    const auto json_result = detail::send(request);
+    return detail::to_result(json_result);
 }
 
 }  // namespace wandbox

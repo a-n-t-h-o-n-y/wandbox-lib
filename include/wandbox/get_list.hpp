@@ -7,6 +7,7 @@
 namespace wandbox {
 
 /// Get the list of compiler's availiable from Wandbox.
+/** Throws std::runtime_error if there are issues with connection or request. */
 std::vector<Compiler> get_list();
 
 }  // namespace wandbox

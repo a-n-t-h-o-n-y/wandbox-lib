@@ -1,7 +1,6 @@
 #include <iostream>
 
 #include <wandbox/compile.hpp>
-#include <wandbox/detail/get_connection.hpp>
 #include <wandbox/detail/to_string.hpp>
 #include <wandbox/get_list.hpp>
 #include <wandbox/get_permlink.hpp>

@@ -8,9 +8,10 @@ add_library(wandbox STATIC
     detail/to_result.cpp
     detail/to_session.cpp
     detail/to_compiler.cpp
+    detail/send.cpp
 )
 
-target_link_libraries(wandbox HTTP_lib)
+target_link_libraries(wandbox PRIVATE HTTP_lib)
 target_compile_features(wandbox PRIVATE cxx_std_17)
 target_compile_options(wandbox PRIVATE -Wall -Wextra)
 target_include_directories(wandbox PUBLIC ${PROJECT_SOURCE_DIR}/include/)

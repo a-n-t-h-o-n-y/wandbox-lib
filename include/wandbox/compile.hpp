@@ -8,6 +8,7 @@ namespace wandbox {
 struct Session;
 
 /// Send \p code off to be compiled by Wandbox, with \p context settings.
+/** Throws std::runtime_error if there are issues with connection or request. */
 Result compile(const Session& context, const std::string& code);
 
 }  // namespace wandbox
