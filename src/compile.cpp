@@ -29,9 +29,6 @@ std::string special_char_map(char c) {
         case '\t':
             result = "\\t";
             break;
-        case '\'':
-            result = "\\'";
-            break;
         case '\?':
             result = "\\?";
             break;
