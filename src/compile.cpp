@@ -17,21 +17,51 @@
 
 namespace {
 
-/// Clean source code so that it can be sent along a socket.
-std::string sanitize(const std::string& input) {
+std::string special_char_map(char c) {
+    auto result = std::string(1, c);
+    switch (c) {
+        case '\n':
+            result = "\\n";
+            break;
+        case '\"':
+            result = "\\\"";
+            break;
+        case '\\':
+            result = "\\\\";
+            break;
+        case '\t':
+            result = "\\t";
+            break;
+        case '\'':
+            result = "\\'";
+            break;
+        case '\?':
+            result = "\\?";
+            break;
+        case '\a':
+            result = "\\a";
+            break;
+        case '\b':
+            result = "\\b";
+            break;
+        case '\f':
+            result = "\\f";
+            break;
+        case '\r':
+            result = "\\r";
+            break;
+        case '\v':
+            result = "\\v";
+            break;
+    }
+    return result;
+}
+
+/// Insert '\' before special chars so they can be interpreted by Wandbox.
+std::string shield_escaped(const std::string& input) {
     std::string result;
     for (char c : input) {
-        std::string to_put(1, c);
-        if (c == '\n') {
-            to_put = "\\n";
-        } else if (c == '\t') {
-            to_put = "\\t";
-        } else if (c == '\"') {
-            to_put = "\\\"";
-        } else if (c == '\\') {
-            to_put = "\\\\";
-        }
-        result.append(to_put);
+        result.append(special_char_map(c));
     }
     return result;
 }
@@ -43,7 +73,7 @@ Result compile(const Session& context, const std::string& code) {
     auto request = http::generate::basic_POST_request(
         detail::host_k, "/api/compile.json", false);
     request.headers["Content-type"] = "application/json";
-    request.message_body = detail::to_string(context, sanitize(code));
+    request.message_body = detail::to_string(context, shield_escaped(code));
 
     http::send(request, detail::get_connection());
     auto response = http::read(detail::get_connection());
