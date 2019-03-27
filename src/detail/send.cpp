@@ -4,7 +4,6 @@
 #include <stdexcept>
 
 #include <boost/property_tree/ptree.hpp>
-#include <boost/system/system_error.hpp>
 
 #include <http/http_request.hpp>
 #include <http/http_response.hpp>
@@ -34,15 +33,16 @@ namespace wandbox {
 namespace detail {
 
 boost::property_tree::ptree send(const http::HTTP_request& request) {
+    http::HTTP_response response;
     while (true) {
         try {
             http::send(request, *get_connection());
+            response = http::read(*get_connection());
             break;
-        } catch (const boost::system::system_error& e) {
+        } catch (const std::runtime_error&) {
             get_connection() = connect();
         }
     }
-    const auto response = http::read(*get_connection());
     return http::parse::json_ptree(response.message_body);
 }
 
